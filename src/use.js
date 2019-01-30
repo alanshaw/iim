@@ -1,6 +1,7 @@
 const Npm = require('./lib/npm')
 const Path = require('path')
 const Fs = require('fs').promises
+const Os = require('os')
 const ora = require('ora')
 const explain = require('explain-error')
 const pkg = require('../package.json')
@@ -56,7 +57,11 @@ module.exports = async function use (implName, versionRange, options) {
 
   // If the version wasn't already installed we need to ipfs init
   if (!isInstalled) {
-    await ipfsInit({ spinner }, binPath)
+    await ipfsInit({ spinner }, binPath, Path.join(Os.homedir(), ipfsPath))
+
+    if (implName === 'js') {
+      await configureJs({ spinner }, binPath)
+    }
   }
 
   spinner.stopAndPersist({ symbol: '🚀', text: 'IPFS is ready to use' })
@@ -151,28 +156,47 @@ async function writeLibBin (ctx, destPath, ipfsBinPath, ipfsPath) {
   const { spinner } = ctx
   const binTplPath = Path.join(__dirname, 'bin', 'ipfs.tpl.js')
 
-  spinner.start(`installing IPFS binary at ${destPath}`)
+  spinner.start(`installing binary at ${destPath}`)
   try {
     let content = await Fs.readFile(binTplPath, 'utf8')
     content = content.replace('{{IPFS_PATH}}', ipfsPath)
     content = content.replace('{{IPFS_BIN_PATH}}', ipfsBinPath)
     await Fs.writeFile(destPath, content, { mode: 0o755 })
   } catch (err) {
-    spinner.fail(`failed to install IPFS binary at ${destPath}`)
+    spinner.fail(`failed to install binary at ${destPath}`)
     throw err
   }
-  spinner.succeed(`installed IPFS binary at ${destPath}`)
+  spinner.succeed(`installed binary at ${destPath}`)
 }
 
-async function ipfsInit (ctx, binPath) {
+async function ipfsInit (ctx, binPath, ipfsPath) {
   const { spinner } = ctx
 
-  spinner.start(`initializing IPFS`)
+  spinner.start(`initializing IPFS at ${ipfsPath}`)
   try {
     await spawn(binPath, ['init'])
   } catch (err) {
     spinner.fail(`failed to init IPFS`)
     throw err
   }
-  spinner.succeed(`initialized IPFS`)
+  spinner.succeed(`initialized IPFS at ${ipfsPath}`)
+}
+
+async function configureJs (ctx, binPath) {
+  const { spinner } = ctx
+
+  spinner.start(`configuring IPFS`)
+  try {
+    await spawn(binPath, ['config', 'Addresses.API', '/ip4/127.0.0.1/tcp/5001'])
+    await spawn(binPath, ['config', 'Addresses.Gateway', '/ip4/127.0.0.1/tcp/8080'])
+    await spawn(binPath, ['config', 'Addresses.Swarm', JSON.stringify([
+      '/ip4/0.0.0.0/tcp/4001',
+      '/ip6/::/tcp/4001',
+      '/ip4/127.0.0.1/tcp/4003/ws'
+    ]), '--json'])
+  } catch (err) {
+    spinner.fail(`failed to init IPFS`)
+    throw err
+  }
+  spinner.succeed(`configured IPFS`)
 }
