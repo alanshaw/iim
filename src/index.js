@@ -1,1 +1,1 @@
-exports.use = require('./use')
+module.exports = require('./commands')
