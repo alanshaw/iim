@@ -38,4 +38,6 @@ try {
   throw explain(err, 'failed to parse args')
 }
 
-IIM[cmd](...cmdArgs)
+// Wait for experimental fs.promises warning to get out the way
+// TODO: remove when promises api is unexperimentalised
+setTimeout(() => IIM[cmd](...cmdArgs))

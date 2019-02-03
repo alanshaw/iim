@@ -7,10 +7,6 @@ const pkg = require('../../package.json')
 const { binPath, libInstallPath } = require('../lib/paths')
 
 module.exports = async () => {
-  // Wait for experimental fs.promises warning to get out the way
-  // TODO: remove when promises api is unexperimentalised
-  await new Promise(resolve => setTimeout(resolve))
-
   const spinner = ora()
 
   spinner.start('fetching info')

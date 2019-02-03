@@ -37,10 +37,6 @@ module.exports = async function use (implName, versionRange, options) {
     throw new Error(`unknown implementation ${implName}`)
   }
 
-  // Wait for experimental fs.promises warning to get out the way
-  // TODO: remove when promises api is unexperimentalised
-  await new Promise(resolve => setTimeout(resolve))
-
   const spinner = ora()
   const npm = new Npm()
 
