@@ -4,6 +4,8 @@
 
 > IPFS install manager
 
+https://youtu.be/C7A3-ycCRWU
+
 ## Install
 
 ```sh
