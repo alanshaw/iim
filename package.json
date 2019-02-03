@@ -25,6 +25,7 @@
     "standard": "^12.0.1"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "debug": "^4.1.1",
     "explain-error": "^1.0.4",
     "minimist": "^1.2.0",

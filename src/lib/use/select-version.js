@@ -1,3 +1,5 @@
+const Chalk = require('chalk')
+
 module.exports = async function selectVersion (ctx, mod, version, options) {
   const { spinner, npm } = ctx
   options = options || {}
@@ -9,7 +11,7 @@ module.exports = async function selectVersion (ctx, mod, version, options) {
     spinner.fail(`failed to find ${options.moduleTitle} versions`)
     throw err
   }
-  spinner.succeed(`selected ${options.moduleTitle} version ${version}`)
+  spinner.succeed(`selected ${Chalk.bold(options.moduleTitle)} version ${Chalk.bold(version)}`)
 
   return version
 }

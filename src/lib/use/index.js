@@ -1,4 +1,6 @@
 const Path = require('path')
+const explain = require('explain-error')
+const Chalk = require('chalk')
 const selectVersion = require('./select-version')
 const npmInstall = require('./npm-install')
 const writeLibBin = require('./write-lib-bin')
@@ -21,7 +23,15 @@ const Impls = {
   }
 }
 
-module.exports = async function use (ctx, implName, versionRange, binPath, installPath, homePath) {
+module.exports = async function use (
+  ctx,
+  implName,
+  versionRange,
+  binPath,
+  installPath,
+  homePath,
+  currentBinLinkPath
+) {
   const { spinner, npm } = ctx
 
   if (!implName) {
@@ -50,22 +60,32 @@ module.exports = async function use (ctx, implName, versionRange, binPath, insta
   )
 
   // /usr/local/bin/ipfs
-  // -> /usr/local/lib/iim/ipfs
-  // -> /usr/local/lib/iim/js-ipfs@0.34.4/node_modules/.bin/jsipfs
+  // -> ~/.iim/dists/js-ipfs@0.34.4/ipfs
+  // -> ~/.iim/dists/js-ipfs@0.34.4/node_modules/.bin/jsipfs
   const libBinPath = Path.join(implInstallPath, 'ipfs')
   const implBinPath = Path.join(implInstallPath, Impls[implName].binPath)
   const ipfsPath = Path.join(homePath, `${implName}-ipfs@${version}`)
 
   await writeLibBin({ spinner }, libBinPath, implBinPath, ipfsPath)
-  await symlink({ spinner }, libBinPath, binPath)
 
   // If the version wasn't already installed we need to ipfs init
   if (!isInstalled) {
-    await ipfsInit({ spinner }, binPath, ipfsPath)
+    await ipfsInit({ spinner }, libBinPath, ipfsPath)
 
     if (Impls[implName].configure) {
-      await configureNode({ spinner }, binPath)
+      await configureNode({ spinner }, libBinPath)
     }
+  }
+
+  // Make a note of which bin is current
+  // ~/.iim/dists/current
+  // -> ~/.iim/dists/js-ipfs@0.34.4/ipfs
+  await symlink({ spinner }, libBinPath, currentBinLinkPath)
+
+  try {
+    await symlink({ spinner }, libBinPath, binPath)
+  } catch (err) {
+    throw explain(err, `failed to link binary at ${binPath}, try running ${Chalk.bold('sudo iim link')}`)
   }
 
   spinner.stop()

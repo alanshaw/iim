@@ -20,13 +20,15 @@ module.exports = async function npmInstall (ctx, mod, version, path, options) {
     await Fs.mkdir(path, { recursive: true })
   }
 
+  if (isInstalled && !options.update) {
+    return isInstalled
+  }
+
   spinner.text = `${isInstalled ? 'updating' : 'installing'} ${moduleTitle} ${version}`
 
   try {
     if (isInstalled) {
-      if (options.update) {
-        await npm.update(path)
-      }
+      await npm.update(path)
     } else {
       await npm.install(mod, version, path)
     }

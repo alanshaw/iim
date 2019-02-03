@@ -7,8 +7,11 @@ module.exports = async function symlink (ctx, from, to) {
   try {
     await Fs.unlink(to)
   } catch (err) {
-    spinner.fail(`failed to remove existing file ${to}`)
-    throw err
+    // Ignore if not exists...
+    if (err.code !== 'ENOENT') {
+      spinner.fail(`failed to remove existing file ${to}`)
+      throw err
+    }
   }
 
   try {

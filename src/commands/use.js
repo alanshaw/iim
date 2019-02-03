@@ -1,12 +1,12 @@
 const ora = require('ora')
 const Npm = require('../lib/npm')
 const use = require('../lib/use')
-const { binPath, installPath, homePath } = require('../lib/paths')
+const { binPath, installPath, homePath, currentBinLinkPath } = require('../lib/paths')
 
 module.exports = async (implName, versionRange) => {
   const spinner = ora()
   const npm = new Npm()
-  await use({ npm, spinner }, implName, versionRange, binPath, installPath, homePath)
+  await use({ npm, spinner }, implName, versionRange, binPath, installPath, homePath, currentBinLinkPath)
 
   console.log('🚀 IPFS is ready to use')
 }

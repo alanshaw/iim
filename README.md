@@ -38,6 +38,8 @@ ipfs version
 ipfs version 0.4.17
 ```
 
-Adds a symlink at `/usr/local/bin/ipfs` that points to a script that runs IPFS with `IPFS_PATH` set to `~/.iim/js@0.34.4`.
+### How does it work?
 
-IPFS is installed to `/usr/local/lib/iim/js@0.34.4/node_modules/ipfs` or `/usr/local/lib/iim/go@0.4.18/node_modules/go-ipfs-dep` for example.
+Adds a symlink at `/usr/local/bin/ipfs` that points to a script that runs IPFS with `IPFS_PATH` set to `~/.iim/dists/js-ipfs@0.34.4/ipfs`.
+
+IPFS is installed to `~/.iim/dists/js-ipfs@0.34.4/node_modules/ipfs` or `~/.iim/dists/go-ipfs@0.4.18/node_modules/go-ipfs-dep` for example.
