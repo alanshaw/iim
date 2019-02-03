@@ -1,5 +1,7 @@
 # iim
 
+[![Build Status](https://travis-ci.org/alanshaw/iim.svg?branch=master)](https://travis-ci.org/alanshaw/iim) [![dependencies Status](https://david-dm.org/alanshaw/iim/status.svg)](https://david-dm.org/alanshaw/iim) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 > IPFS install manager
 
 ## Install
