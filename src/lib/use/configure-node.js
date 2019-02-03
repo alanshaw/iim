@@ -13,7 +13,7 @@ module.exports = async function configureNode (ctx, binPath) {
       '/ip4/127.0.0.1/tcp/4003/ws'
     ]), '--json'])
   } catch (err) {
-    spinner.fail(`failed to init IPFS`)
+    spinner.fail()
     throw err
   }
   spinner.succeed('configured IPFS')

@@ -12,6 +12,7 @@ module.exports = async (ctx, binLinkPath, installPath) => {
   try {
     binPath = await Fs.readlink(binLinkPath)
   } catch (err) {
+    spinner.fail()
     throw explain(err, 'failed to read IPFS symlink')
   }
   spinner.succeed()

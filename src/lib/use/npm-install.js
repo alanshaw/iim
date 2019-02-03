@@ -14,6 +14,7 @@ module.exports = async function npmInstall (ctx, mod, version, path, options) {
     isInstalled = true
   } catch (err) {
     if (err.code !== 'ENOENT') {
+      spinner.fail()
       throw explain(err, `failed to determine if ${moduleTitle} ${version} is already installed`)
     }
     await Fs.mkdir(path, { recursive: true })
