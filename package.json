@@ -1,6 +1,6 @@
 {
   "name": "iim",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "IPFS install manager",
   "main": "src/index.js",
   "bin": {
