@@ -1,15 +1,10 @@
-const Npm = require('../../lib/npm')
 const Path = require('path')
-const Os = require('os')
-const ora = require('ora')
 const selectVersion = require('./select-version')
 const npmInstall = require('./npm-install')
 const writeLibBin = require('./write-lib-bin')
 const symlink = require('./symlink')
 const ipfsInit = require('./ipfs-init')
 const configureNode = require('./configure-node')
-const pkg = require('../../../package.json')
-const { libInstallPath, binPath } = require('../../lib/paths')
 
 const Impls = {
   js: {
@@ -26,8 +21,8 @@ const Impls = {
   }
 }
 
-module.exports = async function use (implName, versionRange, options) {
-  options = options || {}
+module.exports = async function use (ctx, implName, versionRange, binPath, installPath, homePath) {
+  const { spinner, npm } = ctx
 
   if (!implName) {
     throw new Error('missing implementation name')
@@ -37,9 +32,6 @@ module.exports = async function use (implName, versionRange, options) {
     throw new Error(`unknown implementation ${implName}`)
   }
 
-  const spinner = ora()
-  const npm = new Npm()
-
   // Select the version we want to use based on the input range
   const version = await selectVersion(
     { npm, spinner },
@@ -48,7 +40,7 @@ module.exports = async function use (implName, versionRange, options) {
     { moduleTitle: `${implName}-ipfs` }
   )
 
-  const implInstallPath = Path.join(libInstallPath, `${implName}-ipfs@${version}`)
+  const implInstallPath = Path.join(installPath, `${implName}-ipfs@${version}`)
   const isInstalled = await npmInstall(
     { npm, spinner },
     Impls[implName].moduleName,
@@ -57,10 +49,12 @@ module.exports = async function use (implName, versionRange, options) {
     { update: Impls[implName].update, moduleTitle: `${implName}-ipfs` }
   )
 
-  // /usr/local/bin/ipfs -> /usr/local/lib/iim/ipfs -> /usr/local/lib/iim/js-ipfs@0.34.4/node_modules/.bin/jsipfs
+  // /usr/local/bin/ipfs
+  // -> /usr/local/lib/iim/ipfs
+  // -> /usr/local/lib/iim/js-ipfs@0.34.4/node_modules/.bin/jsipfs
   const libBinPath = Path.join(implInstallPath, 'ipfs')
   const implBinPath = Path.join(implInstallPath, Impls[implName].binPath)
-  const ipfsPath = Path.join(Os.homedir(), `.${pkg.name}`, `${implName}-ipfs@${version}`)
+  const ipfsPath = Path.join(homePath, `${implName}-ipfs@${version}`)
 
   await writeLibBin({ spinner }, libBinPath, implBinPath, ipfsPath)
   await symlink({ spinner }, libBinPath, binPath)
@@ -74,23 +68,5 @@ module.exports = async function use (implName, versionRange, options) {
     }
   }
 
-  spinner.stopAndPersist({ symbol: '🚀', text: 'IPFS is ready to use' })
-}
-
-module.exports.parseArgs = argv => {
-  let impl = argv._[1]
-  let version = argv._[2]
-
-  if (impl && impl.includes('@')) {
-    const parts = impl.split('@')
-    impl = parts[0]
-    version = parts[1]
-  }
-
-  // minimist will coerce 0.34 into a number
-  if (version) {
-    version = version.toString()
-  }
-
-  return [impl, version]
+  spinner.stop()
 }

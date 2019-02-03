@@ -1,4 +1,4 @@
-const spawn = require('../../lib/spawn')
+const spawn = require('../spawn')
 
 module.exports = async function ipfsInit (ctx, binPath, ipfsPath) {
   const { spinner } = ctx
