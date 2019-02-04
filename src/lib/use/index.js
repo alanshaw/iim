@@ -88,5 +88,7 @@ module.exports = async function use (
     throw explain(err, `failed to link binary at ${binPath}, try running ${Chalk.bold('sudo iim link')}`)
   }
 
+  spinner.info(`using repo at ${implInstallPath}`)
+
   spinner.stop()
 }
