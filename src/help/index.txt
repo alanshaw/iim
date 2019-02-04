@@ -9,6 +9,7 @@ Command:
                         version or range.
   info                  Get info about the IPFS implementation currently in use.
   link                  Symlink the current install as /usr/local/bin/ipfs
+  list                  List the installed IPFS versions.
   version               Print the version of this tool.
 
 Options:
