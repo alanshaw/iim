@@ -1,3 +1,5 @@
+const Commands = require('./')
+
 const help = `
 iim - Manage your IPFS installs.
 
@@ -18,5 +20,10 @@ Options:
   --help, -h            Get help for a particular command.
 `
 
-module.exports = () => console.log(help)
+module.exports = cmd => {
+  console.log(cmd && Commands[cmd].help ? Commands[cmd].help : help)
+}
+
+module.exports.parseArgs = argv => [argv._[0]]
+
 module.exports.help = help
