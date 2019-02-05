@@ -1,6 +1,6 @@
 const ora = require('ora')
 const link = require('../lib/link')
-const { binPath, currentBinLinkPath } = require('../lib/paths')
+const { binPath, currentBinLinkPath } = require('../default-paths')
 
 module.exports = async () => {
   const spinner = ora()

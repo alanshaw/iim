@@ -2,7 +2,7 @@ const ora = require('ora')
 const parseArgs = require('minimist')
 const Npm = require('../lib/npm')
 const use = require('../lib/use')
-const { binPath, installPath, homePath, currentBinLinkPath } = require('../lib/paths')
+const { binPath, installPath, homePath, currentBinLinkPath } = require('../default-paths')
 
 module.exports = async (implName, versionRange) => {
   const spinner = ora()

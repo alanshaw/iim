@@ -3,7 +3,7 @@ const Chalk = require('chalk')
 const parseArgs = require('minimist')
 const Npm = require('../lib/npm')
 const list = require('../lib/list')
-const { binPath, installPath } = require('../lib/paths')
+const { binPath, installPath } = require('../default-paths')
 
 module.exports = async options => {
   const spinner = ora()

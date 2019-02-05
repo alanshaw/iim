@@ -1,6 +1,6 @@
 const ora = require('ora')
 const info = require('../lib/info')
-const { binPath, installPath } = require('../lib/paths')
+const { binPath, installPath } = require('../default-paths')
 
 module.exports = async () => {
   const spinner = ora()
