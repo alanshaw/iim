@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const IIM = require('./')
+const IIM = require('./commands')
 const argv = require('minimist')(process.argv.slice(2))
 const log = require('debug')('iim:bin')
 const explain = require('explain-error')

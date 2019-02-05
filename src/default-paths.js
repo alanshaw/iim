@@ -1,6 +1,6 @@
 const Path = require('path')
 const Os = require('os')
-const pkg = require('../../package.json')
+const pkg = require('../package.json')
 
 const homePath = Path.join(Os.homedir(), `.${pkg.name}`)
 const installPath = Path.join(homePath, 'dists')
