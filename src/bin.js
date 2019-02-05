@@ -29,11 +29,9 @@ if (!IIM[cmd]) {
 
 let cmdArgs
 try {
-  cmdArgs = IIM[cmd].parseArgs ? IIM[cmd].parseArgs(argv) : []
+  cmdArgs = IIM[cmd].parseArgs ? IIM[cmd].parseArgs(process.argv.slice(2)) : []
 } catch (err) {
   throw explain(err, 'failed to parse args')
 }
 
-// Wait for experimental fs.promises warning to get out the way
-// TODO: remove when promises api is unexperimentalised
-setTimeout(() => IIM[cmd](...cmdArgs))
+IIM[cmd](...cmdArgs)

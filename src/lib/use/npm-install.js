@@ -1,5 +1,6 @@
-const Fs = require('fs').promises
+const Fs = require('fs')
 const Path = require('path')
+const { promisify } = require('util')
 const explain = require('explain-error')
 
 module.exports = async function npmInstall (ctx, mod, version, path, options) {
@@ -10,14 +11,14 @@ module.exports = async function npmInstall (ctx, mod, version, path, options) {
   spinner.start(`checking to see if ${moduleTitle}@${version} is already installed`)
   let isInstalled = false
   try {
-    await Fs.stat(Path.join(path, 'node_modules', mod))
+    await promisify(Fs.stat)(Path.join(path, 'node_modules', mod))
     isInstalled = true
   } catch (err) {
     if (err.code !== 'ENOENT') {
       spinner.fail()
       throw explain(err, `failed to determine if ${moduleTitle} ${version} is already installed`)
     }
-    await Fs.mkdir(path, { recursive: true })
+    await promisify(Fs.mkdir)(path, { recursive: true })
   }
 
   if (isInstalled && !options.update) {

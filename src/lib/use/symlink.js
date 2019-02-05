@@ -1,11 +1,12 @@
-const Fs = require('fs').promises
+const Fs = require('fs')
+const { promisify } = require('util')
 
 module.exports = async function symlink (ctx, from, to) {
   const { spinner } = ctx
 
   spinner.start(`symlinking ${from} -> ${to}`)
   try {
-    await Fs.unlink(to)
+    await promisify(Fs.unlink)(to)
   } catch (err) {
     // Ignore if not exists...
     if (err.code !== 'ENOENT') {
@@ -15,7 +16,7 @@ module.exports = async function symlink (ctx, from, to) {
   }
 
   try {
-    await Fs.symlink(from, to)
+    await promisify(Fs.symlink)(from, to)
   } catch (err) {
     spinner.fail(`failed to symlink ${from} -> ${to}`)
     throw err

@@ -1,3 +1,4 @@
+const parseArgs = require('minimist')
 const Commands = require('./')
 
 const help = `
@@ -24,6 +25,9 @@ module.exports = cmd => {
   console.log(cmd && Commands[cmd].help ? Commands[cmd].help : help)
 }
 
-module.exports.parseArgs = argv => [argv._[0]]
+module.exports.parseArgs = args => {
+  const argv = parseArgs(args)
+  return [argv._[0]]
+}
 
 module.exports.help = help

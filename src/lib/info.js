@@ -1,6 +1,7 @@
-const Fs = require('fs').promises
+const Fs = require('fs')
 const Path = require('path')
 const Os = require('os')
+const { promisify } = require('util')
 const explain = require('explain-error')
 const pkg = require('../../package.json')
 
@@ -10,7 +11,7 @@ module.exports = async (ctx, binLinkPath, installPath) => {
   spinner.start('fetching current version info')
   let binPath
   try {
-    binPath = await Fs.readlink(binLinkPath)
+    binPath = await promisify(Fs.readlink)(binLinkPath)
   } catch (err) {
     spinner.fail()
     throw explain(err, 'failed to read IPFS symlink')

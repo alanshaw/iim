@@ -1,7 +1,8 @@
-const Fs = require('fs').promises
+const Fs = require('fs')
 const explain = require('explain-error')
 const Semver = require('semver')
 const log = require('debug')('iim:lib:list')
+const { promisify } = require('util')
 const info = require('./info')
 const Implementations = require('../implementations.json')
 
@@ -23,7 +24,7 @@ module.exports = async (ctx, installPath, binLinkPath, options) => {
   spinner.start('fetching local versions')
   let files
   try {
-    files = await Fs.readdir(installPath)
+    files = await promisify(Fs.readdir)(installPath)
   } catch (err) {
     if (err.code !== 'ENOENT') {
       spinner.fail()

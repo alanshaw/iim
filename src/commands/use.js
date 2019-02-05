@@ -1,4 +1,5 @@
 const ora = require('ora')
+const parseArgs = require('minimist')
 const Npm = require('../lib/npm')
 const use = require('../lib/use')
 const { binPath, installPath, homePath, currentBinLinkPath } = require('../lib/paths')
@@ -11,7 +12,9 @@ module.exports = async (implName, versionRange) => {
   console.log('🚀 IPFS is ready to use')
 }
 
-module.exports.parseArgs = argv => {
+module.exports.parseArgs = args => {
+  const argv = parseArgs(args)
+
   let impl = argv._[1]
   let version = argv._[2]
 

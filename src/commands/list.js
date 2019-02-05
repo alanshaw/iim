@@ -1,7 +1,8 @@
 const ora = require('ora')
+const Chalk = require('chalk')
+const parseArgs = require('minimist')
 const Npm = require('../lib/npm')
 const list = require('../lib/list')
-const Chalk = require('chalk')
 const { binPath, installPath } = require('../lib/paths')
 
 module.exports = async options => {
@@ -26,7 +27,8 @@ module.exports = async options => {
   })
 }
 
-module.exports.parseArgs = argv => {
+module.exports.parseArgs = args => {
+  const argv = parseArgs(args, { boolean: ['a', 'all'] })
   return [{ implName: argv._[1], all: argv.a || argv.all }]
 }
 
