@@ -16,12 +16,16 @@ module.exports = class NpmLib {
     return this._npm
   }
 
-  async rangeToVersion (mod, range) {
+  async getVersions (mod) {
     const npm = await this._getNpm()
     log(`npm view ${mod} time`)
     const res = await promisify(npm.commands.view)([mod, 'time'], true)
     const currentVer = Object.keys(res)[0]
-    const allVers = Object.keys(res[currentVer].time).filter(v => Semver.valid(v))
+    return Object.keys(res[currentVer].time).filter(v => Semver.valid(v))
+  }
+
+  async rangeToVersion (mod, range) {
+    const allVers = await this.getVersions(mod)
 
     if (!allVers.length) {
       throw new Error(`${mod} has no versions to select from`)

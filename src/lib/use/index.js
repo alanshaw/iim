@@ -7,16 +7,17 @@ const writeLibBin = require('./write-lib-bin')
 const symlink = require('./symlink')
 const ipfsInit = require('./ipfs-init')
 const configureNode = require('./configure-node')
+const Implementations = require('../../implementations.json')
 
-const Impls = {
+const ImplsConf = {
   js: {
-    moduleName: 'ipfs',
+    moduleName: Implementations.js.moduleName,
     binPath: Path.join('node_modules', '.bin', 'jsipfs'),
     configure: true,
     update: true
   },
   go: {
-    moduleName: 'go-ipfs-dep',
+    moduleName: Implementations.go.moduleName,
     binPath: Path.join('node_modules', 'go-ipfs-dep', 'go-ipfs', 'ipfs'),
     configure: false,
     update: false
@@ -38,14 +39,14 @@ module.exports = async function use (
     throw new Error('missing implementation name')
   }
 
-  if (!Object.keys(Impls).includes(implName)) {
+  if (!Object.keys(ImplsConf).includes(implName)) {
     throw new Error(`unknown implementation ${implName}`)
   }
 
   // Select the version we want to use based on the input range
   const version = await selectVersion(
     { npm, spinner },
-    Impls[implName].moduleName,
+    ImplsConf[implName].moduleName,
     versionRange,
     { moduleTitle: `${implName}-ipfs` }
   )
@@ -53,17 +54,17 @@ module.exports = async function use (
   const implInstallPath = Path.join(installPath, `${implName}-ipfs@${version}`)
   const isInstalled = await npmInstall(
     { npm, spinner },
-    Impls[implName].moduleName,
+    ImplsConf[implName].moduleName,
     version,
     implInstallPath,
-    { update: Impls[implName].update, moduleTitle: `${implName}-ipfs` }
+    { update: ImplsConf[implName].update, moduleTitle: `${implName}-ipfs` }
   )
 
   // /usr/local/bin/ipfs
   // -> ~/.iim/dists/js-ipfs@0.34.4/ipfs
   // -> ~/.iim/dists/js-ipfs@0.34.4/node_modules/.bin/jsipfs
   const libBinPath = Path.join(implInstallPath, 'ipfs')
-  const implBinPath = Path.join(implInstallPath, Impls[implName].binPath)
+  const implBinPath = Path.join(implInstallPath, ImplsConf[implName].binPath)
   const ipfsPath = Path.join(homePath, `${implName}-ipfs@${version}`)
 
   await writeLibBin({ spinner }, libBinPath, implBinPath, ipfsPath)
@@ -72,7 +73,7 @@ module.exports = async function use (
   if (!isInstalled) {
     await ipfsInit({ spinner }, libBinPath, ipfsPath)
 
-    if (Impls[implName].configure) {
+    if (ImplsConf[implName].configure) {
       await configureNode({ spinner }, libBinPath)
     }
   }

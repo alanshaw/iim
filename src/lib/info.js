@@ -7,7 +7,7 @@ const pkg = require('../../package.json')
 module.exports = async (ctx, binLinkPath, installPath) => {
   const { spinner } = ctx
 
-  spinner.start('fetching info')
+  spinner.start('fetching current version info')
   let binPath
   try {
     binPath = await Fs.readlink(binLinkPath)
@@ -22,12 +22,12 @@ module.exports = async (ctx, binLinkPath, installPath) => {
     throw new Error('unmanaged IPFS install')
   }
 
-  const [ moduleName, version ] = binPath
+  const [ implName, version ] = binPath
     .replace(installPath, '')
     .split(Path.sep)[1]
     .split('@')
 
-  const ipfsPath = Path.join(Os.homedir(), `.${pkg.name}`, `${moduleName}@${version}`)
+  const ipfsPath = Path.join(Os.homedir(), `.${pkg.name}`, `${implName}@${version}`)
 
-  return { moduleName, version, ipfsPath, implBinPath: binPath }
+  return { implName, version, ipfsPath, implBinPath: binPath }
 }

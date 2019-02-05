@@ -5,13 +5,13 @@ const { binPath, installPath } = require('../lib/paths')
 module.exports = async () => {
   const spinner = ora()
   const {
-    moduleName,
+    implName,
     version,
     ipfsPath,
     implBinPath
   } = await info({ spinner }, binPath, installPath)
 
-  console.log(`⚡️ version: ${moduleName} ${version}`)
+  console.log(`⚡️ version: ${implName} ${version}`)
   console.log(`📦 repo path: ${ipfsPath}`)
   console.log(`🏃‍♂️ bin path: ${implBinPath}`)
 }
