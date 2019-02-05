@@ -11,16 +11,16 @@ test('should get info', async t => {
 
   const binLinkPath = Path.join(Os.tmpdir(), pkg.name + Math.random())
   const installPath = `/usr/local/lib/${pkg.name}`
-  const moduleName = 'test-mod-' + Math.random()
+  const implName = 'test-mod-' + Math.random()
   const version = (Math.random() * 10).toFixed() + '.0.0'
-  const ipfsPath = Path.join(Os.homedir(), `.${pkg.name}`, `${moduleName}@${version}`)
-  const implBinPath = `${installPath}/${moduleName}@${version}/ipfs`
+  const ipfsPath = Path.join(Os.homedir(), `.${pkg.name}`, `${implName}@${version}`)
+  const implBinPath = `${installPath}/${implName}@${version}/ipfs`
 
   await Fs.symlink(implBinPath, binLinkPath)
 
   const res = await info({ spinner }, binLinkPath, installPath)
 
-  t.is(res.moduleName, moduleName)
+  t.is(res.implName, implName)
   t.is(res.version, version)
   t.is(res.ipfsPath, ipfsPath)
   t.is(res.implBinPath, implBinPath)
