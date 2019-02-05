@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-const Fs = require('fs')
-const Path = require('path')
 const IIM = require('./')
 const argv = require('minimist')(process.argv.slice(2))
 const log = require('debug')('iim:bin')
@@ -22,22 +20,29 @@ if (cmd === 'version' || argv.v || argv.version) {
   process.exit()
 }
 
-if (!cmd || argv.h || argv.help || argv.usage) {
-  console.log(Fs.readFileSync(Path.join(__dirname, 'help', `${cmd || 'index'}.txt`), 'utf8'))
-  process.exit()
-}
+const needsHelp = Boolean(argv.h || argv.help || argv.usage)
 
-if (!IIM[cmd]) {
-  throw new Error(`unknown command "${cmd}"`)
-}
+if (needsHelp) {
+  setTimeout(() => {
+    if (cmd && IIM[cmd].help) {
+      console.log(IIM[cmd].help)
+    } else {
+      IIM.help()
+    }
+  })
+} else {
+  if (!IIM[cmd]) {
+    throw new Error(`unknown command "${cmd}"`)
+  }
 
-let cmdArgs
-try {
-  cmdArgs = IIM[cmd].parseArgs ? IIM[cmd].parseArgs(argv) : []
-} catch (err) {
-  throw explain(err, 'failed to parse args')
-}
+  let cmdArgs
+  try {
+    cmdArgs = IIM[cmd].parseArgs ? IIM[cmd].parseArgs(argv) : []
+  } catch (err) {
+    throw explain(err, 'failed to parse args')
+  }
 
-// Wait for experimental fs.promises warning to get out the way
-// TODO: remove when promises api is unexperimentalised
-setTimeout(() => IIM[cmd](...cmdArgs))
+  // Wait for experimental fs.promises warning to get out the way
+  // TODO: remove when promises api is unexperimentalised
+  setTimeout(() => IIM[cmd](...cmdArgs))
+}

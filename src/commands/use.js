@@ -28,3 +28,20 @@ module.exports.parseArgs = argv => {
 
   return [impl, version]
 }
+
+module.exports.help = `
+iim use - Install and use an IPFS implementation.
+
+Usage:
+  iim use <impl> [version] [options...]
+
+Arguments:
+  impl        The implementation to use, current supports "js" or "go".
+  version     A valid semver version for the selected implementation.
+
+Options:
+  --help, -h  Get help for the use command.
+
+Alias:
+  u
+`

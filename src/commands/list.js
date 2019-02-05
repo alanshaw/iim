@@ -29,3 +29,20 @@ module.exports = async options => {
 module.exports.parseArgs = argv => {
   return [{ implName: argv._[1], all: argv.a || argv.all }]
 }
+
+module.exports.help = `
+iim list - List the installed IPFS versions.
+
+Usage:
+  iim list [impl] [options...]
+
+Arguments:
+  impl        Filter the list by implementation name ("js" or "go").
+
+Options:
+  --all, -a   List all available versions both local and remote.
+  --help, -h  Get help for the list command.
+
+Alias:
+  ls
+`

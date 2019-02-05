@@ -15,3 +15,16 @@ module.exports = async () => {
   console.log(`📦 repo path: ${ipfsPath}`)
   console.log(`🏃‍♂️ bin path: ${implBinPath}`)
 }
+
+module.exports.help = `
+iim info - Get info about the IPFS implementation currently in use.
+
+Usage:
+  iim info [options...]
+
+Options:
+  --help, -h  Get help for the info command.
+
+Alias:
+  i
+`
