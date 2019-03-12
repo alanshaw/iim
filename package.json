@@ -43,5 +43,8 @@
   "bugs": {
     "url": "https://github.com/alanshaw/iim/issues"
   },
-  "homepage": "https://github.com/alanshaw/iim#readme"
+  "homepage": "https://github.com/alanshaw/iim#readme",
+  "engines": {
+    "node": ">=10.12.0"
+  }
 }
