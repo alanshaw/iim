@@ -3,6 +3,6 @@
     "moduleName": "ipfs"
   },
   "go": {
-    "moduleName": "go-ipfs-dep"
+    "moduleName": "go-ipfs"
   }
 }
