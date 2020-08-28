@@ -1,10 +1,10 @@
-import test from 'ava'
-import { promises as Fs } from 'fs'
-import Os from 'os'
-import Path from 'path'
-import mockOra from '../helpers/mock-ora'
-import pkg from '../../../package.json'
-import info from '../../../src/lib/info'
+const test = require('ava')
+const { promises: Fs } = require('fs')
+const Os = require('os')
+const Path = require('path')
+const mockOra = require('../helpers/mock-ora')
+const pkg = require('../../../package.json')
+const info = require('../../../src/lib/info')
 
 test('should get info', async t => {
   const spinner = mockOra()
@@ -42,7 +42,7 @@ test('should throw for unmanaged install', async t => {
 
   const binLinkPath = Path.join(Os.tmpdir(), pkg.name + Math.random())
   const installPath = `/usr/local/lib/${pkg.name}`
-  const implBinPath = `/usr/bin/ipfs`
+  const implBinPath = '/usr/bin/ipfs'
 
   await Fs.symlink(implBinPath, binLinkPath)
 

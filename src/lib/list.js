@@ -41,7 +41,7 @@ module.exports = async (ctx, installPath, binLinkPath, options) => {
   const localVersions = files
     .filter(f => f.includes('@'))
     .map(f => {
-      const [ implName, version ] = f.split('@')
+      const [implName, version] = f.split('@')
       return { implName, version, local: true }
     })
     .filter(byImplName)
