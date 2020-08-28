@@ -24,14 +24,16 @@ module.exports = class NpmLib {
     return Object.keys(res[currentVer].time).filter(v => Semver.valid(v))
   }
 
-  async rangeToVersion (mod, range) {
+  async rangeToVersion (mod, range, includePre) {
     const allVers = await this.getVersions(mod)
 
     if (!allVers.length) {
       throw new Error(`${mod} has no versions to select from`)
     }
 
-    let rangeVers = allVers
+    let rangeVers = includePre
+      ? allVers
+      : allVers.filter(v => !Semver.prerelease(v))
 
     if (range) {
       // If the user provides 1 or 1.2, we want to range-ify it to ^1 or ^1.2

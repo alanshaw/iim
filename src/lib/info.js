@@ -23,7 +23,7 @@ module.exports = async (ctx, binLinkPath, installPath) => {
     throw new Error('unmanaged IPFS install')
   }
 
-  const [ implName, version ] = binPath
+  const [implName, version] = binPath
     .replace(installPath, '')
     .split(Path.sep)[1]
     .split('@')
