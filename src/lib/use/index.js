@@ -28,6 +28,7 @@ module.exports = async function use (
   ctx,
   implName,
   versionRange,
+  includePre,
   binPath,
   installPath,
   homePath,
@@ -48,7 +49,7 @@ module.exports = async function use (
     { npm, spinner },
     ImplsConf[implName].moduleName,
     versionRange,
-    { moduleTitle: `${implName}-ipfs` }
+    { moduleTitle: `${implName}-ipfs`, includePre }
   )
 
   const implInstallPath = Path.join(installPath, `${implName}-ipfs@${version}`)

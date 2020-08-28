@@ -4,10 +4,10 @@ const Npm = require('../lib/npm')
 const use = require('../lib/use')
 const { binPath, installPath, homePath, currentBinLinkPath } = require('../default-paths')
 
-module.exports = async (implName, versionRange) => {
+module.exports = async (implName, versionRange, includePre) => {
   const spinner = ora()
   const npm = new Npm()
-  await use({ npm, spinner }, implName, versionRange, binPath, installPath, homePath, currentBinLinkPath)
+  await use({ npm, spinner }, implName, versionRange, includePre, binPath, installPath, homePath, currentBinLinkPath)
 
   console.log('🚀 IPFS is ready to use')
 }
@@ -29,7 +29,12 @@ module.exports.parseArgs = args => {
     version = version.toString()
   }
 
-  return [impl, version]
+  let includePre = false
+  if (argv.pre || argv.p) {
+    includePre = true
+  }
+
+  return [impl, version, includePre]
 }
 
 module.exports.help = `
@@ -43,6 +48,7 @@ Arguments:
   version     A valid semver version for the selected implementation.
 
 Options:
+  --pre,  -p  Include prerelease versions.
   --help, -h  Get help for the use command.
 
 Alias:

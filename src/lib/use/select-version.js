@@ -6,7 +6,7 @@ module.exports = async function selectVersion (ctx, mod, version, options) {
 
   spinner.start(`finding ${options.moduleTitle} versions`)
   try {
-    version = await npm.rangeToVersion(mod, version)
+    version = await npm.rangeToVersion(mod, version, options.includePre)
   } catch (err) {
     spinner.fail(`failed to find ${options.moduleTitle} versions`)
     throw err
