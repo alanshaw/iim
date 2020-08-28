@@ -18,7 +18,7 @@ const ImplsConf = {
   },
   go: {
     moduleName: Implementations.go.moduleName,
-    binPath: Path.join('node_modules', 'go-ipfs-dep', 'go-ipfs', 'ipfs'),
+    binPath: Path.join('node_modules', 'go-ipfs', 'go-ipfs', 'ipfs'),
     configure: false,
     update: false
   }
