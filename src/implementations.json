@@ -1,8 +1,0 @@
-{
-  "js": {
-    "moduleName": "ipfs"
-  },
-  "go": {
-    "moduleName": "go-ipfs"
-  }
-}

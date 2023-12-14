@@ -2,41 +2,9 @@
   "name": "iim",
   "version": "0.7.0",
   "description": "IPFS install manager",
-  "main": "src/index.js",
-  "bin": {
-    "iim": "src/bin.js"
-  },
-  "scripts": {
-    "test": "npm run lint && nyc --reporter=lcov --reporter=text ava --verbose",
-    "lint": "standard"
-  },
-  "keywords": [
-    "IPFS",
-    "version",
-    "install",
-    "manager",
-    "nave",
-    "nvm"
-  ],
   "author": "Alan Shaw",
-  "license": "MIT",
-  "devDependencies": {
-    "ava": "^3.12.1",
-    "nyc": "^15.1.0",
-    "standard": "^14.3.4"
-  },
-  "dependencies": {
-    "chalk": "^4.1.0",
-    "debug": "^4.1.1",
-    "explain-error": "^1.0.4",
-    "minimist": "^1.2.0",
-    "npm": "^6.14.8",
-    "ora": "^5.0.0",
-    "semver": "^7.3.2"
-  },
-  "directories": {
-    "test": "test"
-  },
+  "license": "Apache-2.0 OR MIT",
+  "homepage": "https://github.com/alanshaw/iim#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alanshaw/iim.git"
@@ -44,8 +12,65 @@
   "bugs": {
     "url": "https://github.com/alanshaw/iim/issues"
   },
-  "homepage": "https://github.com/alanshaw/iim#readme",
-  "engines": {
-    "node": ">=10.12.0"
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "keywords": [
+    "IPFS",
+    "install",
+    "manager",
+    "nave",
+    "nvm",
+    "version"
+  ],
+  "bin": {
+    "iim": "dist/src/bin.js"
+  },
+  "type": "module",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "!dist/test",
+    "!**/*.tsbuildinfo"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "eslintConfig": {
+    "extends": "ipfs",
+    "parserOptions": {
+      "project": true,
+      "sourceType": "module"
+    }
+  },
+  "scripts": {
+    "test": "aegir test -t node",
+    "test:node": "npm run test",
+    "lint": "aegir lint",
+    "build": "aegir build --bundle false",
+    "docs": "aegir docs",
+    "dep-check": "aegir dep-check"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "debug": "^4.1.1",
+    "execa": "^8.0.1",
+    "explain-error": "^1.0.4",
+    "npm": "^6.0.0",
+    "ora": "^7.0.1",
+    "read-package-up": "^11.0.0",
+    "semver": "^7.3.2",
+    "sinon-ts": "^2.0.0"
+  },
+  "devDependencies": {
+    "aegir": "^41.2.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }
