@@ -6,7 +6,7 @@ Usage:
 
 Command:
   use <impl> [version]  Install and use an IPFS implementation. \`impl\` can be
-                        "helia" or "kubo" and \`version\` must be a valid semver
+                        "js", "go" or "kubo" and \`version\` must be a valid semver
                         version or range.
   info                  Get info about the IPFS implementation currently in use.
   link                  Symlink the current install as /usr/local/bin/ipfs

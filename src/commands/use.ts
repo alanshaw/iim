@@ -11,7 +11,7 @@ Usage:
   iim use <impl> [version] [options...]
 
 Arguments:
-  impl        The implementation to use, current supports "js" or "go".
+  impl        The implementation to use, currently supports "js", "go" and "kubo".
   version     A valid semver version for the selected implementation.
 
 Options:
