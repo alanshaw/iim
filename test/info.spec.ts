@@ -8,6 +8,12 @@ import info from '../src/lib/info.js'
 import type { Ora } from 'ora'
 
 describe('info', () => {
+  if (Os.platform() === 'win32') {
+    it.skip('windows it not supported', () => {})
+
+    return
+  }
+
   it('should get info', async () => {
     const spinner = stubInterface<Ora>()
     const pkg = readPackageUpSync()?.packageJson ?? {} as any
