@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const help = `
 iim - Manage your IPFS installs.
 

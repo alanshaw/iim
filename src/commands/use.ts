@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 import ora from 'ora'
+import { binPath, installPath, homePath, currentBinLinkPath } from '../default-paths.js'
 import Npm from '../lib/npm/index.js'
 import use from '../lib/use/index.js'
-import { binPath, installPath, homePath, currentBinLinkPath } from '../default-paths.js'
 import type { ParseArgsOptionConfig } from './index.js'
 
 const help = `

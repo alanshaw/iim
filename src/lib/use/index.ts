@@ -1,14 +1,14 @@
 import Path from 'path'
-// @ts-expect-error
-import explain from 'explain-error'
 import Chalk from 'chalk'
-import selectVersion from './select-version.js'
-import npmInstall from './npm-install.js'
-import writeLibBin from './write-lib-bin.js'
-import symlink from './symlink.js'
-import ipfsInit from './ipfs-init.js'
-import configureNode from './configure-node.js'
+// @ts-expect-error no types
+import explain from 'explain-error'
 import { implementations } from '../../implementations.js'
+import configureNode from './configure-node.js'
+import ipfsInit from './ipfs-init.js'
+import npmInstall from './npm-install.js'
+import selectVersion from './select-version.js'
+import symlink from './symlink.js'
+import writeLibBin from './write-lib-bin.js'
 import type { Context } from '../../bin.js'
 
 export default async function use (
@@ -23,7 +23,7 @@ export default async function use (
 ): Promise<void> {
   const { spinner, npm } = ctx
 
-  if (!implName) {
+  if (implName == null) {
     throw new Error('missing implementation name')
   }
 

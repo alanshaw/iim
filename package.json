@@ -49,6 +49,7 @@
     }
   },
   "scripts": {
+    "clean": "aegir clean",
     "test": "aegir test -t node",
     "test:node": "npm run test",
     "lint": "aegir lint",

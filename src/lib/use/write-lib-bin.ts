@@ -1,15 +1,14 @@
-import Path from 'node:path'
 import Fs from 'node:fs/promises'
 import Os from 'node:os'
-import type { Context } from '../../bin'
-import { dirname } from 'node:path'
+import Path from 'node:path'
 import { fileURLToPath } from 'url'
+import type { Context } from '../../bin'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const dirname = Path.dirname(fileURLToPath(import.meta.url))
 
 export default async function writeLibBin (ctx: Context, destPath: string, ipfsBinPath: string, ipfsPath: string): Promise<void> {
   const { spinner } = ctx
-  const binTplPath = Path.join(__dirname, '..', '..', 'bin', 'ipfs.tpl.js')
+  const binTplPath = Path.join(dirname, '..', '..', 'bin', 'ipfs.tpl.js')
 
   ipfsPath = ipfsPath.replace(Os.homedir() + Path.sep, '')
 

@@ -1,14 +1,13 @@
-// @ts-expect-error no types
-import Npm from 'npm'
-import { promisify } from 'util'
-import Semver from 'semver'
-import Path from 'path'
+import Path from 'node:path'
+import { promisify } from 'node:util'
+import { fileURLToPath } from 'url'
 import debug from 'debug'
 import { execa } from 'execa'
-import { dirname } from 'node:path'
-import { fileURLToPath } from 'url'
+// @ts-expect-error no types
+import Npm from 'npm'
+import Semver from 'semver'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const dirname = Path.dirname(fileURLToPath(import.meta.url))
 
 const log = debug('iim:lib:npm')
 
@@ -20,7 +19,7 @@ export default class NpmLib {
   private _npm?: Npm.Static
 
   async _getNpm (): Promise<Npm.Static> {
-    if (this._npm) {
+    if (this._npm != null) {
       return this._npm
     }
 
@@ -39,7 +38,7 @@ export default class NpmLib {
     const registryVersions: Array<[string, any]> = Object.entries(body.versions)
 
     for (const [version, metadata] of registryVersions) {
-      if (!Semver.valid(version)) {
+      if (Semver.valid(version) == null) {
         continue
       }
 
@@ -56,22 +55,22 @@ export default class NpmLib {
   async rangeToVersion (mod: string, range: string, includePre: boolean): Promise<string> {
     const allVers = await this.getVersions(mod)
 
-    if (!allVers.length) {
+    if (allVers.length === 0) {
       throw new Error(`${mod} has no versions to select from`)
     }
 
     let rangeVers = includePre
       ? allVers
-      : allVers.filter(v => !Semver.prerelease(v))
+      : allVers.filter(v => Semver.prerelease(v) == null)
 
-    if (range) {
+    if (range != null) {
       // If the user provides 1 or 1.2, we want to range-ify it to ^1 or ^1.2
       const parts = range.split('.')
       if (parts.length < 3 && parts.every(p => /^[0-9]+$/.test(p))) {
         range = `^${range}`
       }
 
-      if (!Semver.validRange(range, true)) {
+      if (Semver.validRange(range, true) == null) {
         throw new Error(`invalid version or range "${range}"`)
       }
 
@@ -83,7 +82,7 @@ export default class NpmLib {
 
     log('versions', allVers.join(', '))
 
-    if (!rangeVers.length) {
+    if (rangeVers.length === 0) {
       throw new Error('no versions found within range')
     }
 
@@ -92,10 +91,10 @@ export default class NpmLib {
   }
 
   async install (mod: string, version: string, path: string): Promise<void> {
-    await execa('node', [Path.join(__dirname, 'bin', 'install'), `${mod}@${version}`], { cwd: path })
+    await execa('node', [Path.join(dirname, 'bin', 'install'), `${mod}@${version}`], { cwd: path })
   }
 
   async update (path: string): Promise<void> {
-    await execa('node', [Path.join(__dirname, 'bin', 'update')], { cwd: path })
+    await execa('node', [Path.join(dirname, 'bin', 'update')], { cwd: path })
   }
 }

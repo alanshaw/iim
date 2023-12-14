@@ -8,7 +8,7 @@ export interface SelectVersionOptions {
 
 export default async function selectVersion (ctx: Required<Context>, mod: string, version: string, options: SelectVersionOptions): Promise<string> {
   const { spinner, npm } = ctx
-  options = options || {}
+  options = options ?? {}
 
   spinner.start(`finding ${options.moduleTitle} versions`)
   try {

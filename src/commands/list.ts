@@ -1,8 +1,9 @@
-import ora from 'ora'
+/* eslint-disable no-console */
 import Chalk from 'chalk'
-import Npm from '../lib/npm/index.js'
-import list from '../lib/list.js'
+import ora from 'ora'
 import { binPath, installPath } from '../default-paths.js'
+import list from '../lib/list.js'
+import Npm from '../lib/npm/index.js'
 import type { ParseArgsOptionConfig } from './index.js'
 
 const help = `
@@ -46,15 +47,15 @@ export default {
       ...options
     })
 
-    if (!versions.length) {
-      return console.log('😱 no IPFS versions installed yet')
+    if (versions.length === 0) {
+      console.log('😱 no IPFS versions installed yet'); return
     }
 
     versions.forEach(({ implName, version, current, local }) => {
       let line = `${implName} ${version}`
-      if (current) {
+      if (current != null) {
         line = `* ${Chalk.green(line)}`
-      } else if (!local) {
+      } else if (local == null) {
         line = `  ${Chalk.red(line)}`
       } else {
         line = `  ${line}`

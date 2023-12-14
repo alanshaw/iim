@@ -1,9 +1,9 @@
-import { default as info } from './info.js'
-import { default as link } from './link.js'
-import { default as list } from './list.js'
-import { default as help } from './help.js'
-import { default as use } from './use.js'
-import { default as version } from './version.js'
+import help from './help.js'
+import info from './info.js'
+import link from './link.js'
+import list from './list.js'
+import use from './use.js'
+import version from './version.js'
 
 export interface ParseArgsOptionConfig {
   type: 'string' | 'boolean'
@@ -13,10 +13,10 @@ export interface ParseArgsOptionConfig {
 }
 
 export interface Command {
-  aliases: string[],
+  aliases: string[]
   help: string
   options: Record<string, ParseArgsOptionConfig>
-  run: (positionals: string[], options: any) => Promise<void> | void
+  run(positionals: string[], options: any): Promise<void> | void
 }
 
 const commands: Record<string, Command> = {

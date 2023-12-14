@@ -1,10 +1,10 @@
 import Fs from 'node:fs/promises'
+import debug from 'debug'
 // @ts-expect-error no types
 import explain from 'explain-error'
 import Semver from 'semver'
-import info, { type Info } from './info.js'
-import debug from 'debug'
 import { implementations } from '../implementations.js'
+import info, { type Info } from './info.js'
 import type { Context } from '../bin.js'
 
 const log = debug('iim:lib:list')
@@ -17,9 +17,9 @@ export interface Version {
 }
 
 interface RemoteVersion {
-  implName: string;
-  moduleName: string;
-  versions: string[];
+  implName: string
+  moduleName: string
+  versions: string[]
 }
 
 export interface ListOptions {
@@ -55,8 +55,8 @@ export default async (ctx: Required<Context>, installPath: string, binLinkPath: 
   }
   spinner.succeed()
 
-  const byImplName = ({ implName }: { implName: string }) => (
-    options?.implName ? implName.startsWith(options.implName) : true
+  const byImplName = ({ implName }: { implName: string }): boolean => (
+    options?.implName != null ? implName.startsWith(options.implName) : true
   )
 
   const localVersions: Version[] = files
@@ -69,7 +69,7 @@ export default async (ctx: Required<Context>, installPath: string, binLinkPath: 
 
   log('local', localVersions)
 
-  if (!options.all) {
+  if (options.all == null) {
     return flagCurrent(currentVersionInfo, localVersions.sort(sortImplNameVersion))
   }
 
@@ -91,14 +91,14 @@ export default async (ctx: Required<Context>, installPath: string, binLinkPath: 
   }
 
   const remoteVersions = remoteModules
-    .reduce((versions, remoteModule) => {
-      const moduleVersions = remoteModule.versions
-        .map(v => ({
-          implName: remoteModule.implName,
-          version: v
-        }))
-      return versions.concat(moduleVersions)
-    }, [] as any[])
+    .reduce<any[]>((versions, remoteModule) => {
+    const moduleVersions = remoteModule.versions
+      .map(v => ({
+        implName: remoteModule.implName,
+        version: v
+      }))
+    return versions.concat(moduleVersions)
+  }, [])
     .filter((remoteVersion) => {
       return !localVersions.some(localVersion => {
         return localVersion.implName === remoteVersion.implName &&
@@ -121,7 +121,7 @@ function sortImplNameVersion (a: Version, b: Version): number {
 }
 
 function flagCurrent (currentVersionInfo: Info | undefined, versions: Version[]): Version[] {
-  if (!currentVersionInfo) {
+  if (currentVersionInfo == null) {
     return versions
   }
 

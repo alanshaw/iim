@@ -1,16 +1,13 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 
+import { promisify } from 'util'
 // @ts-expect-error no types
 import Npm from 'npm'
-import { promisify } from 'util'
 
-process.on('uncaughtException', err => console.error(err))
+process.on('uncaughtException', err => { console.error(err) })
 process.on('unhandledRejection', err => { console.error(err); process.exit(1) })
 
-async function main () {
-  const npm = await promisify(Npm.load)()
+const npm = await promisify(Npm.load)()
 
-  await promisify(npm.commands.update)()
-}
-
-main()
+await promisify(npm.commands.update)()
