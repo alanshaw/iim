@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { readPackageUp } from 'read-package-up'
 
 export default {

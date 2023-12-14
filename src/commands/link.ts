@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import ora from 'ora'
-import link from '../lib/link.js'
 import { binPath, currentBinLinkPath } from '../default-paths.js'
+import link from '../lib/link.js'
 
 const help = `
 iim link - Symlink the current install as /usr/local/bin/ipfs.

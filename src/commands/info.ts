@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import ora from 'ora'
-import info from '../lib/info.js'
 import { binPath, installPath } from '../default-paths.js'
+import info from '../lib/info.js'
 
 const help = `
 iim info - Get info about the IPFS implementation currently in use.

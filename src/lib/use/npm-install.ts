@@ -1,9 +1,9 @@
 import Fs from 'node:fs/promises'
 import Path from 'node:path'
+import { execa } from 'execa'
 // @ts-expect-error no types
 import explain from 'explain-error'
 import type { Context } from '../../bin.js'
-import { execa } from 'execa'
 
 export interface TargetVersion {
   update: boolean

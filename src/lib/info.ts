@@ -1,6 +1,6 @@
 import Fs from 'node:fs/promises'
-import Path from 'node:path'
 import Os from 'node:os'
+import Path from 'node:path'
 // @ts-expect-error no types
 import explain from 'explain-error'
 import { readPackageUp } from 'read-package-up'
