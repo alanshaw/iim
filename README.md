@@ -42,7 +42,7 @@ $ iim use kubo 0.23
 🚀 IPFS is ready to use
 
 $ ipfs version
-kubo version: 0.24.0
+kubo version: 0.23.0
 ```
 
 ## How does it work?
