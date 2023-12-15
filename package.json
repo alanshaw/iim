@@ -55,7 +55,8 @@
     "lint": "aegir lint",
     "build": "aegir build --bundle false",
     "docs": "aegir docs",
-    "dep-check": "aegir dep-check"
+    "dep-check": "aegir dep-check",
+    "release": "aegir release"
   },
   "dependencies": {
     "chalk": "^5.3.0",
