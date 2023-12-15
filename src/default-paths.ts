@@ -1,8 +1,9 @@
 import Os from 'node:os'
 import Path from 'node:path'
+import Url from 'node:url'
 import { readPackageUp } from 'read-package-up'
 
-const result = await readPackageUp()
+const result = await readPackageUp({ cwd: Path.dirname(Url.fileURLToPath(import.meta.url)) })
 
 if (result == null) {
   throw new Error('Could not read package.json')
