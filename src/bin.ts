@@ -3,7 +3,7 @@
 
 import { parseArgs } from 'node:util'
 import debug from 'debug'
-import commands from './commands/index.js'
+import commands, { type ParseArgsOptionConfig } from './commands/index.js'
 import type NpmLib from './lib/npm/index.js'
 import type { Ora } from 'ora'
 
@@ -14,12 +14,24 @@ export interface Context {
   npm?: NpmLib
 }
 
-const rootArgv = parseArgs({ args: process.argv, allowPositionals: true, strict: false })
+const options: Record<string, ParseArgsOptionConfig> = {
+  help: {
+    type: 'boolean',
+    short: 'h'
+  }
+}
+
+const rootArgv = parseArgs({ args: process.argv, options, allowPositionals: true, strict: false })
 
 const subcommand = commands[rootArgv.positionals[2]]
 
 if (subcommand == null) {
   await commands.help.run(rootArgv.positionals.slice(3), rootArgv.values)
+  process.exit(0)
+}
+
+if (rootArgv.values.help === true) {
+  console.info(subcommand.help)
   process.exit(0)
 }
 
