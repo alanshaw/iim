@@ -52,11 +52,13 @@ export default class NpmLib {
     return versions
   }
 
-  async rangeToVersion (mod: string, range: string, includePre: boolean): Promise<string> {
-    const allVers = await this.getVersions(mod)
+  async rangeToVersion (mod: string, range: string, includePre: boolean, includeDeprecated: boolean): Promise<string> {
+    const allVers = await this.getVersions(mod, {
+      deprecated: includeDeprecated
+    })
 
     if (allVers.length === 0) {
-      throw new Error(`${mod} has no versions to select from`)
+      throw new Error(`${mod} has no versions to select from. Some may be deprecated, pass --deprecated as a flag to enabled their use`)
     }
 
     let rangeVers = includePre

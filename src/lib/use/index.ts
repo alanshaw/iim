@@ -16,6 +16,7 @@ export default async function use (
   implName: string,
   versionRange: string,
   includePre: boolean,
+  includeDeprecated: boolean,
   binPath: string,
   installPath: string,
   homePath: string,
@@ -36,7 +37,7 @@ export default async function use (
     { npm, spinner },
     implementations[implName].moduleName,
     versionRange,
-    { moduleTitle: `${implName}-ipfs`, includePre }
+    { moduleTitle: `${implName}-ipfs`, includePre, includeDeprecated }
   )
 
   const implInstallPath = Path.join(installPath, `${implName}-ipfs@${version}`)
