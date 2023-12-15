@@ -1,6 +1,7 @@
 import Fs from 'node:fs/promises'
 import Os from 'node:os'
 import Path from 'node:path'
+import Url from 'node:url'
 // @ts-expect-error no types
 import explain from 'explain-error'
 import { readPackageUp } from 'read-package-up'
@@ -36,7 +37,7 @@ export default async (ctx: Context, binLinkPath: string, installPath: string): P
     .split(Path.sep)[1]
     .split('@')
 
-  const result = await readPackageUp()
+  const result = await readPackageUp({ cwd: Path.dirname(Url.fileURLToPath(import.meta.url)) })
 
   if (result == null) {
     throw new Error('Could not read package.json')
