@@ -9,9 +9,17 @@
 
 > IPFS install manager
 
-# About
+## Install
 
-## Example - Use the latest version of Kubo
+```console
+$ npm i -g iim
+```
+
+Note: Windows not yet supported!
+
+## Usage
+
+**Example - Use the latest version of Kubo**
 
 ```sh
 $ iim use kubo
@@ -28,7 +36,7 @@ $ ipfs version
 kubo version: 0.24.0
 ```
 
-## Example - Use Kubo at version 0.23.0
+**Example - Use Kubo at version 0.23.0**
 
 ```sh
 $ iim use kubo 0.23
@@ -74,22 +82,6 @@ Don't worry! Mostly everything worked fine - you just don't have permission to w
 
 Feel free to dive in! [Open an issue](https://github.com/alanshaw/iim/issues/new) or submit PRs.
 
-# Install
-
-```console
-$ npm i iim
-```
-
-Note: Windows not yet supported!
-
-# API Docs
-
-- <https://alanshaw.github.io/iim>
-
-# License
+## License
 
 [MIT](LICENSE) © Alan Shaw
-
-# Contribution
-
-Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
