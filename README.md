@@ -2,7 +2,7 @@
 
 <https://youtu.be/C7A3-ycCRWU>
 
-<img width="674" alt="screenshot 2019-02-03 at 22 35 58" src="https://user-images.githubusercontent.com/152863/52183862-2b1fdf00-2804-11e9-94b4-17cdb73bd7bf.png">
+<img src="https://bafybeigyvdbj3vxzkckpicj5lys7m4d7euvtvobcollw4gwrott2nnkyji.ipfs.w3s.link/iim.png" width="710" />
 
 [![codecov](https://img.shields.io/codecov/c/github/alanshaw/iim.svg?style=flat-square)](https://codecov.io/gh/alanshaw/iim)
 [![CI](https://img.shields.io/github/actions/workflow/status/alanshaw/iim/js-test-and-release.yml?branch=master\&style=flat-square)](https://github.com/alanshaw/iim/actions/workflows/js-test-and-release.yml?query=branch%3Amaster)
