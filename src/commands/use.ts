@@ -27,6 +27,10 @@ const options: Record<string, ParseArgsOptionConfig> = {
   pre: {
     short: 'p',
     type: 'boolean'
+  },
+  deprecated: {
+    short: 'd',
+    type: 'boolean'
   }
 }
 
@@ -34,12 +38,12 @@ export default {
   aliases: ['u'],
   help,
   options,
-  run: async (positionals: string[], options: { pre: boolean }) => {
+  run: async (positionals: string[], options: { pre: boolean, deprecated: boolean }) => {
     const [implName, versionRange] = positionals
 
     const spinner = ora()
     const npm = new Npm()
-    await use({ npm, spinner }, implName, versionRange, options.pre, binPath, installPath, homePath, currentBinLinkPath)
+    await use({ npm, spinner }, implName, versionRange, options.pre, options.deprecated, binPath, installPath, homePath, currentBinLinkPath)
 
     console.log('🚀 IPFS is ready to use')
   }

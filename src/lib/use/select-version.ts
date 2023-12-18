@@ -3,6 +3,7 @@ import type { Context } from '../../bin'
 
 export interface SelectVersionOptions {
   includePre: boolean
+  includeDeprecated: boolean
   moduleTitle: string
 }
 
@@ -12,7 +13,7 @@ export default async function selectVersion (ctx: Required<Context>, mod: string
 
   spinner.start(`finding ${options.moduleTitle} versions`)
   try {
-    version = await npm.rangeToVersion(mod, version, options.includePre)
+    version = await npm.rangeToVersion(mod, version, options.includePre, options.includeDeprecated)
   } catch (err) {
     spinner.fail(`failed to find ${options.moduleTitle} versions`)
     throw err
