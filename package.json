@@ -64,7 +64,7 @@
     "execa": "^8.0.1",
     "explain-error": "^1.0.4",
     "npm": "^6.0.0",
-    "ora": "^7.0.1",
+    "ora": "^8.0.1",
     "read-package-up": "^11.0.0",
     "semver": "^7.3.2",
     "sinon-ts": "^2.0.0"
