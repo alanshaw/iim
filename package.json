@@ -70,7 +70,7 @@
     "sinon-ts": "^2.0.0"
   },
   "devDependencies": {
-    "aegir": "^41.2.0"
+    "aegir": "^42.2.5"
   },
   "directories": {
     "test": "test"
